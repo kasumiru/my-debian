@@ -1,0 +1,4 @@
+#! /bin/sh
+docker rmi -f my/debian:stretch
+docker build -t my/debian:stretch .
+
