@@ -2,7 +2,9 @@ FROM debian:stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get -qq update && apt-get -qq upgrade \
+RUN echo 'search hg' >> /etc/resolv.conf \
+    && echo 'nameserver 10.12.0.3' >> /etc/resolv.conf \
+    && apt-get -qq update && apt-get -qq upgrade \
     && cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime \
     && echo "Europe/Moscow" > /etc/timezone \
     && dpkg-reconfigure tzdata \
@@ -14,8 +16,6 @@ RUN apt-get -qq update && apt-get -qq upgrade \
     && echo "syntax on" >> /etc/vim/vimrc \
     && echo 'set mouse -=a' >> /root/.vimrc \
     && echo 'set mouse -=a' >> /etc/vim/vimrc \
-    && echo 'search hg' >> /etc/resolv.conf \
-    && echo 'nameserver 10.12.0.3' >> /etc/resolv.conf \
     && sed -i -e "s/\"syntax on/syntax on/" /etc/vim/vimrc
 
 COPY .vimrc /root/
